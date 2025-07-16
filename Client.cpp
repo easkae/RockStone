@@ -61,6 +61,12 @@ void Client::on_packet(const server::Packet &packet)
 
 void Client::params_set(const server::Packet &packet) const
 {
+	if (!player) 
+	{
+		logger->warning("Player is nullptr")
+        return;
+    }
+
 	string params = packet.S(0);
 	if (params.empty())
 		return;
@@ -72,6 +78,12 @@ void Client::params_set(const server::Packet &packet) const
 
 void Client::buy(const server::Packet &packet)
 {
+	if (!player) 
+	{
+        logger->warning("Player is nullptr");
+        return;
+    }
+	
 	uint32_t item_id = packet.I(0);
 
 	if (!this->player->balance->can_afford(item_id))
